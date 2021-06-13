@@ -40,7 +40,7 @@ yargs.command({
             type: 'string'
         }
     },
-    handler: function(agrv){
+    handler(agrv){
         notes.removeNote(agrv.title)
     }
 })
@@ -56,7 +56,7 @@ yargs.command({
 yargs.command({
     command: "read",
     describe: "Read a note",
-    handler: function(){
+    handler(){
         console.log(`reading a note: ${reads}`)
     }
 })

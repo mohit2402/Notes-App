@@ -1,69 +1,62 @@
 const fs = require('fs')
 const chalk = require('chalk')
 
-const getNotes = function (){
+const getNotes = () => {
     return "Your notes ....";
 }
 
-const addNote = function (title,body){
+const addNote = (title, body) => {
     const notes = loadNotes()
 
-    const duplicatNotes = notes.filter(function(notes){
-        return notes.title === title
-    })
+    const duplicatNotes = notes.filter((notes) => notes.title === title)
 
-    if(duplicatNotes.length === 0)
-    {
+    // const duplicatNotes = notes.filter(function(notes){
+    //     return notes.title === title
+    // })
+
+    if (duplicatNotes.length === 0) {
         notes.push({
             title: title,
             body: body
         })
-    
+
         saveNotes(notes)
         console.log(chalk.green.inverse("New note added!"))
 
-    }else{
+    } else {
         console.log(chalk.red.inverse('Note title taken!'))
     }
 
-    
+
 }
 
-const saveNotes = function(notes){
+const saveNotes = (notes) => {
     const toJson = JSON.stringify(notes)
-    fs.writeFileSync('notes.json',toJson) 
+    fs.writeFileSync('notes.json', toJson)
 }
 
-const loadNotes = function(){
-    try{
+const loadNotes = () => {
+    try {
         const dataBuffer = fs.readFileSync('notes.json')
         const dataJson = dataBuffer.toString()
         return JSON.parse(dataJson)
-    }catch(e){
+    } catch (e) {
         return []
     }
 }
 
-const removeNote = function(title){
+const removeNote = (title) => {
     const notes = loadNotes()
-
-    const filterNotes = notes.filter(function(notes){
-        return notes.title!==title
-    })
-
-    
-
-    if(notes.length > filterNotes.length)
-    {
+    const filterNotes = notes.filter((notes) => notes.title !== title)
+    if (notes.length > filterNotes.length) {
         console.log(chalk.green.inverse(`Note removed!`))
         saveNotes(filterNotes)
     }
-    else{
+    else {
         console.log(chalk.red.inverse("No note found!"))
-
     }
 
-    
+
 
 }
 
