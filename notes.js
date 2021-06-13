@@ -71,6 +71,8 @@ const listNotes = () => {
 const readNote = (title) => {
     const notes = loadNotes()
     const read = notes.find((note) => note.title===title)
+    
+    
 
     if(!read)
     {
